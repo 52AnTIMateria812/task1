@@ -1,20 +1,22 @@
 #include "StoreManager.h"
 #include <limits>
 
-void StoreManager::addStore(Store* store) { stores.push_back(store); }
-
 Store* StoreManager::findStoreWithLowestPrice(const std::string& productName) {
     Store* result = nullptr;
     double minPrice = std::numeric_limits<double>::max();
-    
+
     for (auto store : stores) {
         try {
             double price = store->getProductPrice(productName);
-            if (price < minPrice && store->getProductQuantity(productName) > 0) {
+            int available = store->getProductQuantity(productName);
+            
+            if (available > 0 && price < minPrice) {
                 minPrice = price;
                 result = store;
             }
-        } catch (...) {}
+        } catch (const std::runtime_error&) {
+            // Продукт отсутствует в магазине - пропускаем
+        }
     }
     return result;
 }
