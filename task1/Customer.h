@@ -7,7 +7,8 @@ class Customer {
 private:
     std::string name;
     double balance;
-    std::vector<std::pair<std::string, int>> shoppingList;
+    // Список покупок хранит товары с их количеством
+    std::vector<std::pair<std::string, int>> shoppingList; 
 
 public:
     Customer(const std::string& name, double initialBalance);
